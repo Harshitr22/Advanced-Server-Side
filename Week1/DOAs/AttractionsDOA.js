@@ -28,6 +28,11 @@ class AttractionsDAO{
             ]
         return await data;
     }
+
+    async create(req){
+        await console.log(req.body)
+        return "Successfully saved"
+    }
 }
         
 

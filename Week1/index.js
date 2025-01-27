@@ -4,6 +4,8 @@ const UserService = require('./Services/UserService')
 const AttractionService = require('./Services/AttractionService')
 const PORT_NUMBER = 4000;
 
+app.use(express.json())
+
 const data = [
     {
     fname: 'Harshit',
@@ -46,13 +48,10 @@ app.get('/attractions/del/:name', async (req,res)=>{
     res.json(data)
 })
 
-app.get('/attractions/update/:id/:name', async (req,res)=>{
-    const id = req.params.id
-    const attraction = req.params.name;
+app.post('/newRecord', async (req,res)=> {
     this.attractionService = new AttractionService()
-    const data = await this.attractionService.updateAttraction(id, attraction)
-    res.json(data)
+    const results = await this.attractionService.create(req)
+    res.json(results)
 })
-
 
 app.listen(PORT_NUMBER)

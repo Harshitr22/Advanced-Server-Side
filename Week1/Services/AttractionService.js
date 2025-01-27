@@ -2,35 +2,34 @@ const AttractionsDAO = require('../DOAs/AttractionsDOA')
 
 class AttractionService{
     constructor(){
-        this.attractiondao = new AttractionsDAO()
+        this.attractionDao = new AttractionsDAO()
     }
 
     async getAll(){
         try {
-            const results = await this.attractiondao.getAll()
+            const results = await this.attractionDao.getAll()
             return results
         } catch (error) {
             console.log(error)
         }
     }
 
-    async deleteAttraction(attractionid){
+    async deleteAttraction(attractionId){
         try {
-            const all = await this.attractiondao.getAll()
-            const results = all.filter(Object => Object.id != attractionid)
+            const all = await this.attractionDao.getAll()
+            const results = all.filter(Object => Object.id != attractionId)
             return results
         } catch (error) {
             console.log(error)
         }
     }
 
-    async updateAttraction(attractionid, name){
+    async create(req){
         try {
-            const all = await this.attractiondao.getAll()
-            const results = all.da
-            return all
-        } catch (error) {
-            console.log(error)
+            const result =  await this.attractionDao.create(req)
+            return result
+        } catch (ex) {
+            console.error(ex)
         }
     }
 
