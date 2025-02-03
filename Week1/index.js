@@ -54,4 +54,8 @@ app.post('/newRecord', async (req,res)=> {
     res.json(results)
 })
 
+app.post('/create', async (req,res)=>{
+    res.sendFile(__dirname + '//views/createForm.html')
+})
+
 app.listen(PORT_NUMBER)
