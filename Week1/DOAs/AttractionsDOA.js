@@ -1,37 +1,35 @@
+const pool = require('../Databases/SQLConn')
+
 class AttractionsDAO{
 
     constructor(){
 
     }
 
-    async getAll()
-    {
-        const data = [
-            {   
-                id: 1,
-                name: 'London Bridge',
-                location: 'London',
-                desc: 'Bridge in London'
-            },
-            {
-                id: 2,
-                name: 'Buckingham Palace',
-                location: 'London',
-                desc: 'Kings Residence'
-            },
-            {
-                id: 3,
-                name: 'Tower Bridge',
-                location: 'London',
-                desc: 'Bridge in London'
-            },
-            ]
-        return await data;
+    createResponse(success, data = null, error=null){
+        return {
+            success,
+            data,
+            error:error?.message || error
+        }
+    }
+
+    async getAll(){
+        try {
+            const [rows] =  await pool.query('select * from _attraction_ ')
+            if(!rows.length){
+                return this.createResponse(false, null, 'No Users')
+            }
+            return this.createResponse(true, rows)
+        } catch (err) {
+            console.error(err)
+        }
     }
 
     async create(req){
-        await console.log(req.body)
-        return "Successfully saved"
+        const result = await pool.query(' INSERT INTO _attraction_ (_name_, _location_, _desc_) values(?)', [Object.values(req.body)])
+        console.log(result.insertId);
+        return result.insertId;
     }
 }
         

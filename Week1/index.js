@@ -2,7 +2,7 @@ const express = require('express')
 const app = express()
 const UserService = require('./Services/UserService')
 const AttractionService = require('./Services/AttractionService')
-const PORT_NUMBER = 4000;
+const PORT_NUMBER = 3000;
 
 app.use(express.json())
 
