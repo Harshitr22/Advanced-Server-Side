@@ -6,6 +6,8 @@ const PORT_NUMBER = 3000;
 
 app.use(express.json())
 
+app.use(express.static('public'))
+
 const data = [
     {
     fname: 'Harshit',
