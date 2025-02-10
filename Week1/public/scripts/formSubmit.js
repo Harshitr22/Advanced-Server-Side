@@ -1,5 +1,6 @@
 document.getElementById('contact-submit').addEventListener('click', ()=>{
     submit();
+    window.location.href= "../views/createform.html"
 })
 
 async function submit(){

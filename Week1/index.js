@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 const UserService = require('./Services/UserService')
 const AttractionService = require('./Services/AttractionService')
+const APIKeyService = require('./Services/APIKeyService')
 const PORT_NUMBER = 3000;
 
 app.use(express.json())
@@ -56,8 +57,19 @@ app.post('/newRecord', async (req,res)=> {
     res.json(results)
 })
 
-app.post('/create', async (req,res)=>{
+app.get('/create', async (req,res)=>{
     res.sendFile(__dirname + '//views/createForm.html')
 })
 
-app.listen(PORT_NUMBER)
+app.post('/createAPIKey', async (req, res) => {
+    this.apikeyservice = new APIKeyService();
+    const result = await this.apikeyservice.create(req.body.owner);
+    res.json(result);
+})
+
+app.get('/createKey', async (req,res)=>{
+    res.sendFile(__dirname + '//views/createKey.html')
+})
+
+
+app.listen(PORT_NUMBER);
