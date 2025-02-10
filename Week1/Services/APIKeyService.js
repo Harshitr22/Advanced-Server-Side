@@ -13,7 +13,10 @@ class APIKeyService{
         return result;
     }
     
-
+    async validate(key){
+        const result = await this.apiKeyDao.getKey(key);
+        return result;
+    }
 
 }
 

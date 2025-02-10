@@ -3,28 +3,15 @@ const app = express()
 const UserService = require('./Services/UserService')
 const AttractionService = require('./Services/AttractionService')
 const APIKeyService = require('./Services/APIKeyService')
+const apiValidation = require('./Middleware/APIKeyValidation')
 const PORT_NUMBER = 3000;
 
 app.use(express.json())
 
 app.use(express.static('public'))
 
-const data = [
-    {
-    fname: 'Harshit',
-    surname: 'Raj',
-    Occupation: 'Student'
-    },
-    {
-        fname: 'Donald',
-        surname: 'Trump',
-        Occupation: 'President'
-    },
-    {
-        fname: 'Steven',
-        surname: 'Segal',
-        Occupation: 'Akido Master'
-    }]
+app.use('/api', apiValidation);
+
 
 app.get('/', (req, res)=>{
     res.send("<h1>Welcome to the Home page</h1>")
@@ -38,7 +25,7 @@ app.get('/testdata', (req, res)=> {
     res.json(data)
 })
 
-app.get('/attractions', async (req,res)=>{
+app.get('/api/attractions', async (req,res)=>{
     this.attractionService = new AttractionService()
     const data = await this.attractionService.getAll()
     res.json(data)
