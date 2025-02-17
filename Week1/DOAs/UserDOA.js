@@ -24,10 +24,10 @@ class UserDAO{
     async getByEmail(email){
         try {
             const [result] = await pool.query('SELECT * FROM _users_ WHERE _email_ = ?', [email]);
-            if(!email){
+            if(!result){
                 return this.createResponse(false, 'Not a registered user');
             }
-            return this.createResponse(true, result);
+            return await this.createResponse(true, result);
         } catch (error) {
             console.error(error);
         }
