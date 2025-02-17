@@ -58,5 +58,10 @@ app.get('/createKey', async (req,res)=>{
     res.sendFile(__dirname + '//views/createKey.html')
 })
 
+app.post('/register', async (req,res)=>{
+    const userservice = new UserService();
+    const result = userservice.create(req);
+    res.json(result);
+})
 
 app.listen(PORT_NUMBER);

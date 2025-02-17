@@ -9,7 +9,7 @@ const apiValidation = async (req, res, next) =>{
     this.apikeyservice = new APIKeyService();
     const result = await this.apikeyservice.validate(key);
     if(!result.success){
-        return res.result(401).json({error: "Invalid Key"});
+        return res.status(401).json({error: "Invalid Key"});
     }
     req.apikey = result;
     next();

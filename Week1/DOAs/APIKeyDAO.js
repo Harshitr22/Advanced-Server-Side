@@ -25,7 +25,7 @@ class APIKeyDAO{
     async getKey(key){
         try {
             const [result] = await pool.query('SELECT * FROM _apikeys_ WHERE _apikey_ = ? AND _is_active_ = 1', [key]);
-            if(!result){
+            if(!result.length){
                 return this.createResponse(false, 'Invalid key');
             }
             return this.createResponse(true);

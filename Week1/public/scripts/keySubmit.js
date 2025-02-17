@@ -1,13 +1,14 @@
-document.getElementById('contact-submit').addEventListener('click', ()=>{
+document.getElementById('key-submit').addEventListener('click', ()=>{
     submit();
-    window.location.href= "../views/createform.html"
+    window.location.href= "../views/createKey.html"
 })
 
 async function submit(){
     var name = document.getElementById('name').value;
 
     object = {
-        "name": name
+        "name": name,
+        
     }
     const response = await fetch('http://localhost:3000/createAPIKey', {
         method: 'POST',
