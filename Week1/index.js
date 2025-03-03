@@ -1,22 +1,22 @@
 const express = require('express')
 const app = express()
+const session= require("express-session")
 const UserService = require('./Services/UserService')
 const AttractionService = require('./Services/AttractionService')
 const APIKeyService = require('./Services/APIKeyService')
 const apiValidation = require('./Middleware/APIKeyValidation')
-const {checkSession} = require('./Middleware/SessionAuth/SessionAuth')
-const session = require('session')
+const checkSession = require('./Middleware/SessionAuth/SessionAuth')
 
 const PORT_NUMBER = 3000;
 
 app.use(session({
     secret: process.env.SECRET,
     resave: false,
-    saveUnitialized: false,
+    saveUninitialized: false,
     cookie: {
         secure: false,
         httpOnly: true,
-        maxAge: 24*60*60*1000
+        maxAge: 24*60*60*1000,
     }
 }))
 
@@ -42,25 +42,24 @@ app.get('/', (req, res)=>{
 })
 
 app.get('/contact', checkSession, (req, res)=>{
-    res.sendFile(__dirname + '//views//index.html')
+    res.sendFile(__dirname + '/views/index.html')
 })
 
-app.get('/testdata', (req, res)=> {
-    res.json(data)
-})
+// app.get('/testdata', (req, res)=> {
+//     res.json(data)
+// })
 
 app.get('/api/attractions', async (req,res)=>{
-    this.attractionService = new AttractionService()
-    const data = await this.attractionService.getAll()
+    const attractionService = new AttractionService()
+    const data = await attractionService.getAll()
     res.json(data)
 })
 
-app.get('/attractions/del/:name', async (req,res)=>{
-    const attraction = req.params.name;
-    this.attractionService = new AttractionService()
-    const data = await this.attractionService.deleteAttraction(attraction)
-    res.json(data)
-})
+app.post('/newRecord', async (req, res) => {
+    const attractionService = new AttractionService();
+    const results = await attractionService.create(req);
+    res.json(results);
+});
 
 app.post('/newRecord', async (req,res)=> {
     this.attractionService = new AttractionService()
@@ -69,7 +68,7 @@ app.post('/newRecord', async (req,res)=> {
 })
 
 app.get('/create', async (req,res)=>{
-    res.sendFile(__dirname + '//views/createForm.html')
+    res.sendFile(__dirname + '/views/createForm.html')
 })
 
 app.post('/createAPIKey', async (req, res) => {
@@ -79,12 +78,12 @@ app.post('/createAPIKey', async (req, res) => {
 })
 
 app.get('/createKey', async (req,res)=>{
-    res.sendFile(__dirname + '//views/createKey.html')
+    res.sendFile(__dirname + '/views/createKey.html')
 })
 
 app.post('/registerUser', async (req,res)=>{
     const userservice = new UserService();
-    const result = userservice.create(req);
+    const result = await userservice.create(req);
     res.json(result);
 })
 
