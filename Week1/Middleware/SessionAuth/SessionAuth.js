@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 
 const checkSession = async(req, res, next) => {
 
-    const authHeader = req.header('Authoratization');
+    const authHeader = req.header('Authorization');
     const token = authHeader && authHeader.split
 
     if(token){
