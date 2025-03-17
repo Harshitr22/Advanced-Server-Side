@@ -8,7 +8,7 @@ class AttractionService{
     async getAll(){
         try {
             const results = await this.attractionDao.getAll()
-            return results
+            return results.data
         } catch (error) {
             console.log(error)
         }

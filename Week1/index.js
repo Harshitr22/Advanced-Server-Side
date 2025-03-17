@@ -6,9 +6,13 @@ const AttractionService = require('./Services/AttractionService')
 const APIKeyService = require('./Services/APIKeyService')
 const apiValidation = require('./Middleware/APIKeyValidation')
 const checkSession = require('./Middleware/SessionAuth/SessionAuth')
+const path = require('path');
+
+app.set("view engine", "ejs");
+app.set('views', './views');
 
 const PORT_NUMBER = 3000;
-
+app.use(express.json())
 app.use(session({
     secret: process.env.SECRET,
     resave: false,
@@ -20,11 +24,10 @@ app.use(session({
     }
 }))
 
-app.use(express.json())
-
 app.use(express.static('public'))
+//app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/api', apiValidation);
+//app.use('/api', apiValidation);
 
 // app.use(session({
 //     secret: process.env.SECRET,
@@ -41,6 +44,15 @@ app.get('/', (req, res)=>{
     res.send("<h1>Welcome to the Home page</h1>")
 })
 
+app.get('/ejstest', async (req, res) => {
+    const data =  {fn: 'Donald', ln: 'Trump'}
+    res.render('home', {data}); 
+})
+
+app.get('/attractions', async (req, res) => {
+    res.render('attractions')
+})
+
 app.get('/contact', checkSession, (req, res)=>{
     res.sendFile(__dirname + '/views/index.html')
 })
@@ -50,9 +62,10 @@ app.get('/contact', checkSession, (req, res)=>{
 // })
 
 app.get('/api/attractions', async (req,res)=>{
-    const attractionService = new AttractionService()
-    const data = await attractionService.getAll()
-    res.json(data)
+    const attractionService = new AttractionService();
+    const data = await attractionService.getAll();
+    res.json(data.data)
+    // res.render('ejsLoopTest', {data});
 })
 
 app.post('/newRecord', async (req, res) => {
@@ -68,7 +81,7 @@ app.post('/newRecord', async (req,res)=> {
 })
 
 app.get('/create', async (req,res)=>{
-    res.sendFile(__dirname + '/views/createForm.html')
+    res.sendFile(__dirname + '/views/createForm.ejs')
 })
 
 app.post('/createAPIKey', async (req, res) => {

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        table, td, th{
+            border: 1px solid black;
+        }
+        td{
+            padding: 7px;
+        }
+    </style>
+</head>
+<body>
+    <%-include('headers')%>
+    <h1>Attractions List</h1>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Location</th>
+            <th>Description</th>
+        </tr>
+        <% data.forEach(record => {%>
+            <tr>
+                <td><%=record._attractId_ %></td>
+                <td><%=record._name_ %></td>
+                <td><%=record._location_ %></td>
+                <td><%=record._desc_ %></td>
+            </tr>
+        <% }) %>    
+    </table>
+        
+</body>
+</html>
