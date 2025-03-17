@@ -64,7 +64,7 @@ app.get('/contact', checkSession, (req, res)=>{
 app.get('/api/attractions', async (req,res)=>{
     const attractionService = new AttractionService();
     const data = await attractionService.getAll();
-    res.json(data.data)
+    res.json(data)
     // res.render('ejsLoopTest', {data});
 })
 

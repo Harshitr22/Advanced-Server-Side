@@ -5,7 +5,7 @@ document.getElementById('getAttractions').addEventListener('click', (e)=> {
 async function getAllAttraction(){
     try {
         const response = await fetch('/api/attractions');
-        if(response.ok){
+        if(!response.ok){
             throw new Error('You messed up, mate. Go debug', response.data);
         }
 
@@ -17,7 +17,7 @@ async function getAllAttraction(){
             <tr>
                 <th>Id</th>
                 <th>Name</th>
-                <th>Locatio</th>
+                <th>Location</th>
                 <th>Description</th>
             </tr>`
             
